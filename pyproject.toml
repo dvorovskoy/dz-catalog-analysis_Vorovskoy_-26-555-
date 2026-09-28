@@ -17,18 +17,8 @@ dev = [
 [tool.ruff]
 line-length = 88
 target-version = "py312"
+exclude = ["venv", ".venv", "dist", "__pycache__"]
 
 [tool.ruff.lint]
-select = [
-    "E",   # pycodestyle errors (PEP8)
-    "W",   # pycodestyle warnings
-    "F",   # pyflakes (неиспользуемые импорты, переменные)
-    "I",   # isort (порядок импортов)
-    "N",   # pep8-naming (имена переменных/функций)
-    "UP",  # pyupgrade (устаревшие конструкции)
-    "B",   # flake8-bugbear (потенциальные баги)
-    "SIM", # flake8-simplify (упрощения)
-]
-ignore = [
-    "E501", # длина строки — форматтер сам разберётся
-]
+select = ["E", "F", "I"]
+ignore = []
