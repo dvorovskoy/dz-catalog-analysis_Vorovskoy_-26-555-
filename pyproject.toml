@@ -1,0 +1,15 @@
+[project]
+name = "catalog-analysis"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Denis Vorovskoy", email = "denis.vorovskoy@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.9",
+]
