@@ -195,6 +195,33 @@ def top_n_by_rating(movies, n=3):
     sorted_movies = sorted(movies, key=lambda m: m["rating"], reverse=True)
     return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
 
+def count_by_genre(movies):
+    """Словарь {жанр: количество фильмов} через dict.get()."""
+    counts = {}
+    for movie in movies:
+        for genre in movie["genres"]:
+            counts[genre] = counts.get(genre, 0) + 1
+    return counts
+
+
+def actor_filmography(movies):
+    """Словарь {актёр: [список названий фильмов]}."""
+    filmography = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            filmography.setdefault(actor, []).append(movie["title"])
+    return filmography
+
+
+def above_average_ratings(movies):
+    """Словарь {title: rating} для фильмов с рейтингом выше среднего."""
+    avg = average_rating(movies)
+    return {
+        movie["title"]: movie["rating"]
+        for movie in movies
+        if movie["rating"] > avg
+    }
+
 if __name__ == "__main__":
     print(f"Средний рейтинг: {average_rating(movies)}")
     print(f"Возраст (старый, новый, средний): {catalog_age_stats(movies)}")
@@ -236,3 +263,18 @@ if __name__ == "__main__":
 
     print()
     print(f"Исходный movies[0]: {movies[0]['title']} — {movies[0]['rating']}")
+
+    print()
+    print("Фильмов по жанрам:")
+    for genre, count in count_by_genre(movies).items():
+        print(f"  {genre} — {count}")
+
+    print()
+    print("Фильмография:")
+    for actor, titles in actor_filmography(movies).items():
+        print(f"  {actor}: {', '.join(titles)}")
+
+    print()
+    print("Выше среднего:")
+    for title, rating in above_average_ratings(movies).items():
+        print(f"  {title} — {rating}")
