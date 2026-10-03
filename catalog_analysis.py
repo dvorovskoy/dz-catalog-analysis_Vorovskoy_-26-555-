@@ -132,6 +132,36 @@ def decade_label(year):
         case _:
             return "старые"
 
+def print_non_comedies(movies):
+    """Печатает названия фильмов, не относящихся к жанру comedy."""
+    for movie in movies:
+        if "comedy" in movie["genres"]:
+            continue
+        print(movie["title"])
+
+
+def find_first_masterpiece(movies, threshold=9.0):
+    """Находит первый фильм с рейтингом выше threshold через while/else."""
+    index = 0
+    while index < len(movies):
+        movie = movies[index]
+        if movie["rating"] > threshold:
+            print(f"Первый шедевр: {movie['title']} ({movie['rating']})")
+            break
+        index += 1
+    else:
+        print("Шедевров не найдено")
+
+
+def count_long_movies(movies, threshold=120):
+    """Считает фильмы длиннее threshold минут через накопительную переменную."""
+    count = 0
+    for movie in movies:
+        if movie["duration_min"] > threshold:
+            count += 1
+    return count
+
+
 if __name__ == "__main__":
     print(f"Средний рейтинг: {average_rating(movies)}")
     print(f"Возраст (старый, новый, средний): {catalog_age_stats(movies)}")
@@ -144,3 +174,15 @@ if __name__ == "__main__":
     print(decade_label(2024))  # новые
     print(decade_label(2020))  # недавние
     print(decade_label(2010))  # старые
+    print()
+    print("Фильмы не-комедии:")
+    print_non_comedies(movies)
+
+    print()
+    find_first_masterpiece(movies)
+
+    print()
+    print(f"Длинных фильмов (>120 мин): {count_long_movies(movies)}")
+
+    print()
+    find_first_masterpiece(movies, threshold=10.0)
