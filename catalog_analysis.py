@@ -161,6 +161,28 @@ def count_long_movies(movies, threshold=120):
             count += 1
     return count
 
+def normalize_title(title):
+    """Приводит название к Title Case без str.title()."""
+    words = title.split()
+    normalized = []
+    for word in words:
+        normalized.append(word[0].upper() + word[1:])
+    return " ".join(normalized)
+
+
+def make_slug(title):
+    """Превращает название в slug: 'Silent Hours' -> 'silent-hours'."""
+    return normalize_title(title).lower().replace(" ", "-")
+
+
+def format_report_line(movie):
+    """Собирает строку описания фильма через f-строку."""
+    title = normalize_title(movie["title"])
+    year = movie["year"]
+    rating = movie["rating"]
+    duration = duration_in_hours(movie["duration_min"])
+    genres = ", ".join(sorted(movie["genres"]))
+    return f'"{title}" ({year}) — {rating}/10, {duration}, жанры: {genres}'
 
 if __name__ == "__main__":
     print(f"Средний рейтинг: {average_rating(movies)}")
@@ -186,3 +208,7 @@ if __name__ == "__main__":
 
     print()
     find_first_masterpiece(movies, threshold=10.0)
+    print()
+    print(normalize_title("silent hours"))
+    print(make_slug("Silent Hours"))
+    print(format_report_line(movies[7]))
