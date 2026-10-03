@@ -1,4 +1,5 @@
 """Анализ каталога фильмов."""
+
 import math
 
 movies = [
@@ -110,6 +111,7 @@ def duration_in_hours(minutes):
     mins = minutes % 60
     return f"{hours}ч {mins}м"
 
+
 def rating_tier(rating):
     """Категория фильма по рейтингу."""
     if rating >= 9:
@@ -131,6 +133,7 @@ def decade_label(year):
             return "недавние"
         case _:
             return "старые"
+
 
 def print_non_comedies(movies):
     """Печатает названия фильмов, не относящихся к жанру comedy."""
@@ -161,6 +164,7 @@ def count_long_movies(movies, threshold=120):
             count += 1
     return count
 
+
 def normalize_title(title):
     """Приводит название к Title Case без str.title()."""
     words = title.split()
@@ -184,6 +188,7 @@ def format_report_line(movie):
     genres = ", ".join(sorted(movie["genres"]))
     return f'"{title}" ({year}) — {rating}/10, {duration}, жанры: {genres}'
 
+
 def titles_sorted_by_rating(movies):
     """Список названий фильмов, отсортированных по убыванию рейтинга."""
     sorted_movies = sorted(movies, key=lambda m: m["rating"], reverse=True)
@@ -194,6 +199,7 @@ def top_n_by_rating(movies, n=3):
     """Топ-n фильмов как список кортежей (title, rating)."""
     sorted_movies = sorted(movies, key=lambda m: m["rating"], reverse=True)
     return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
+
 
 def count_by_genre(movies):
     """Словарь {жанр: количество фильмов} через dict.get()."""
@@ -217,10 +223,9 @@ def above_average_ratings(movies):
     """Словарь {title: rating} для фильмов с рейтингом выше среднего."""
     avg = average_rating(movies)
     return {
-        movie["title"]: movie["rating"]
-        for movie in movies
-        if movie["rating"] > avg
+        movie["title"]: movie["rating"] for movie in movies if movie["rating"] > avg
     }
+
 
 def all_genres(movies):
     """Множество всех уникальных жанров каталога."""
@@ -244,6 +249,7 @@ def genres_only_in_one(movies_a, movies_b):
     for movie in movies_b:
         genres_b.update(movie["genres"])
     return genres_a - genres_b
+
 
 def iter_high_rated(movies, min_rating=8.0):
     """Лениво отдаёт фильмы с рейтингом не ниже min_rating."""
