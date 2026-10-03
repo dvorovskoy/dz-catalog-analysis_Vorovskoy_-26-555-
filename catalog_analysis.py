@@ -222,6 +222,29 @@ def above_average_ratings(movies):
         if movie["rating"] > avg
     }
 
+def all_genres(movies):
+    """Множество всех уникальных жанров каталога."""
+    genres = set()
+    for movie in movies:
+        genres.update(movie["genres"])
+    return genres
+
+
+def common_actors(movie1, movie2):
+    """Множество актёров, снимавшихся в обоих фильмах."""
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+
+def genres_only_in_one(movies_a, movies_b):
+    """Жанры, встречающиеся в movies_a, но не в movies_b."""
+    genres_a = set()
+    for movie in movies_a:
+        genres_a.update(movie["genres"])
+    genres_b = set()
+    for movie in movies_b:
+        genres_b.update(movie["genres"])
+    return genres_a - genres_b
+
 if __name__ == "__main__":
     print(f"Средний рейтинг: {average_rating(movies)}")
     print(f"Возраст (старый, новый, средний): {catalog_age_stats(movies)}")
@@ -278,3 +301,14 @@ if __name__ == "__main__":
     print("Выше среднего:")
     for title, rating in above_average_ratings(movies).items():
         print(f"  {title} — {rating}")
+
+
+    print()
+    print(f"Все жанры: {sorted(all_genres(movies))}")
+
+    print()
+    print(f"Общие актёры (movies[0], movies[3]): {common_actors(movies[0], movies[3])}")
+
+    print()
+    only = genres_only_in_one(movies[5:6], movies[:5])
+    print(f"Жанры только из movies[5:6]: {only}")
